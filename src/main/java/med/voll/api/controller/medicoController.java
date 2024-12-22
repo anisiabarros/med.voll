@@ -25,7 +25,9 @@ public class medicoController {
     //UriComponentsBuilder é uma classe do spring que consegue localizar o endereço da api automaticamente
     public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedico dados, UriComponentsBuilder uriBuilder) { // anotação valid para que o spring valid os dados do dto
         var medico = new Medico(dados);
+        //assim o id será criado pelo banco de dados automaticamente
         repository.save(medico);
+        //uri precisa ser o endereço da api
         var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
         //return ResponseEntity.created(uri).body(dto); esse é o padrao, a uri é o endereco da api
         return ResponseEntity.created(uri).body(new DadosDetalhamentoMedico(medico));
@@ -53,7 +55,7 @@ public class medicoController {
     }
 
 
-    @GetMapping("/{id}")//codigo 204 na exclusao
+    @GetMapping("/{id}")
     public ResponseEntity detalhar(@PathVariable Long id){
         var medico = repository.getReferenceById(id);
         return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
