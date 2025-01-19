@@ -1,6 +1,7 @@
 package med.voll.api.infra.exception;
 
 import jakarta.persistence.EntityNotFoundException;
+import med.voll.api.domain.ValidacaoException;
 import org.hibernate.query.sqm.EntityTypeException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -14,6 +15,11 @@ public class TratadorDeErros {
     public ResponseEntity tratarError404(){
         return ResponseEntity.notFound().build();
     }
+    @ExceptionHandler(ValidacaoException.class)
+    public ResponseEntity tratarErrorRegraDeNegocio(ValidacaoException ex){
+    return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity tratarError400(MethodArgumentNotValidException ex){
         var erros = ex.getFieldErrors();
