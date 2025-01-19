@@ -24,7 +24,7 @@ public class SecurityConfigurations {
         return http.csrf(csrf -> csrf.disable())//desabilitando CSRF
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(req -> req.requestMatchers("/login").permitAll()
+                .authorizeHttpRequests(req -> req.requestMatchers("/login", "/v3/api-docs/**", "swagger-ui.html", "swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 ).addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class ).
                 build();//configurando a sessao com stateless

@@ -30,7 +30,7 @@ public class Paciente {
         @Embedded
         private Endereco endereco;
 
-        private  Boolean ativo;
+        private  boolean ativo;
 
         public Paciente(DadosCadastroPaciente dados) {
             this.nome = dados.nome();
